@@ -47,14 +47,14 @@ Follow this link to repository: [procedural approach][link here]
 
 Using default user: _mysql -u root_;
 After this, you can write basic **SQL commands** perform actions in you **Database**
+![Screenshot on Terminal 01](./screenshots/01.PNG)
+![Screenshot on Terminal 02](./screenshots/02.PNG)
 
 Lets create a databases
 
 ```SQL
 CREATE DATABASE tb_name;
 ```
-
-![Screenshot on Terminal 01](./screenshots/01.PNG)
 
 Lets create a database table
 
@@ -67,7 +67,6 @@ CREATE TABLE table_name (
 )
 ```
 
-![Screenshot on Terminal 02](./screenshots/02.PNG)
 ![Screenshot on Terminal 03](./screenshots/03.PNG)
 
 Add Data into Table
