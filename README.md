@@ -21,7 +21,7 @@ I am going to walk you through the basics of establishing a very simple connecti
 ### Overview
 
 I am going to demonstrate this using two approach.
-**Simple Procedural PHP** and **Object Oriented PHP** follow this link to read more: [ [How can I sanitize user input with PHP?](https://www.w3docs.com/snippets/php/how-can-i-sanitize-user-input-with-php.html)](https://www.geeksforgeeks.org/differences-between-procedural-and-object-oriented-programming/)
+**Simple Procedural PHP** and **Object Oriented PHP** follow this link to read more: [How can I sanitize user input with PHP?](https://www.geeksforgeeks.org/differences-between-procedural-and-object-oriented-programming/)
 
 ### Procedural Approach
 
@@ -34,15 +34,16 @@ Follow this link to repository: [procedural approach][link here]
 ## Tools and Software
 
 1. **Server**: XAMPP
-2. **Languages**: PHP/HTML
+2. **Languages**: PHP/HTML/SQL
 3. **Text editor**: VS Code, Sublime text, Atom, Notepad++
 4. **Terminal**: Command Prompt, GIT Bash
 
 ## Setup and SQL
 
-1. locate xampp directory and access the bin folder: xampp/mysql/bin
-
-2. create a database or access and existing one
+1. locate xampp directory and start xampp server.
+2. access the bin folder: xampp/mysql/bin
+3. From here you can access the global **mysql**
+4. create a database or access and existing one
 
 Using default user: _mysql -u root_;
 After this, you can write basic **SQL commands** perform actions in you **Database**
@@ -52,6 +53,8 @@ Lets create a databases
 ```SQL
 CREATE DATABASE tb_name;
 ```
+
+![Screenshot on Terminal 01](./screenshots/01.PNG)
 
 Lets create a database table
 
@@ -64,6 +67,9 @@ CREATE TABLE table_name (
 )
 ```
 
+![Screenshot on Terminal 02](./screenshots/02.PNG)
+![Screenshot on Terminal 03](./screenshots/03.PNG)
+
 Add Data into Table
 
 ```SQL
@@ -72,6 +78,7 @@ VALUES ('test', 'test@gmail.com');
 ```
 
 Add Multiple rows
+![Screenshot on Terminal 04](./screenshots/04.PNG)
 
 ```SQL
 INSERT INTO table_name (first_name, email) VALUES
@@ -79,6 +86,8 @@ INSERT INTO table_name (first_name, email) VALUES
 ('test2', 'test3@gmail.com'),
 ('test3', 'test3@gmail.com');
 ```
+
+![Screenshot on Terminal 04](./screenshots/04.PNG)
 
 Fetch Data form the Table
 
@@ -97,6 +106,8 @@ OR
 ```SQL
 SELECT * FROM table_name WHERE first_name LIKE 'John';
 ```
+
+![Screenshot on Terminal 05](./screenshots/05.PNG)
 
 ## Creating Connections
 
@@ -170,16 +181,20 @@ Read this article to understand more about PHP and Data validation methods [How 
 
 ## Screenshots.
 
-![Screenshot on Terminal 01](./screenshots/01.PNG)
-![Screenshot on Terminal 02](./screenshots/02.PNG)
-![Screenshot on Terminal 03](./screenshots/03.PNG)
-![Screenshot on Terminal 04](./screenshots/04.PNG)
-![Screenshot on Terminal 05](./screenshots/05.PNG)
-![Screenshot on Terminal 06](./screenshots/06.PNG)
-![Screenshot on Terminal 07](./screenshots/07.PNG)
+### Display Data from the Database
+
 ![Screenshot on Terminal 09](./screenshots/09.PNG)
 ![Screenshot on Terminal 10](./screenshots/10.PNG)
 ![Screenshot on Terminal 11](./screenshots/11.PNG)
+![Screenshot on Terminal 06](./screenshots/06.PNG)
+
+### Add Data to the Database
+
 ![Screenshot on Terminal 12](./screenshots/12.PNG)
 ![Screenshot on Terminal 13](./screenshots/13.PNG)
+![Screenshot on Terminal 07](./screenshots/07.PNG)
 ![Screenshot on Terminal 14](./screenshots/14.PNG)
+
+### Results on Submit
+
+![Screenshot on Terminal 08](./screenshots/08.PNG)
