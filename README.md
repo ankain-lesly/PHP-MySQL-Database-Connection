@@ -11,11 +11,17 @@
   - [Using Connections](#using-connections)
 - [Quick Disclaimer](#quick-disclaimer)
 - [Screenshots](#screenshots)
+- [Object Oriented Programming in PHP](#object-oriented-programming)
+  - [Introduction](#introduction)
+  - [Setup](#setup)
+  - [Approach](#approach)
+  - [File Structure](#file-structure)
+  - [Usage](#usage)
 
 ## Introduction
 
 Hi, I am Lesly Chuo.
-Thanks for checking out this Demo Repo on PHP - MySQL.
+Thanks for checking out this Demo Repository on PHP - MySQL.
 I am going to walk you through the basics of establishing a very simple connection to your local Database Server with PHP and Interacting with it using SQL commands. Starting from the terminal (CLI) and integrating it in your HTML project.
 
 ### Overview
@@ -197,3 +203,215 @@ Read this article to understand more about PHP and Data validation methods [How 
 ### Results on Submit
 
 ![Screenshot on Terminal 08](./screenshots/08.PNG)
+
+# Object Oriented Programming
+
+## Introduction
+
+OOP stands for Object-Oriented Programming.
+
+Procedural programming is about writing procedures or functions that perform operations on the data, while object-oriented programming is about creating objects that contain both data and functions.
+
+Object-oriented programming has several advantages over procedural programming:
+
+1.  OOP is faster and easier to execute
+2.  OOP provides a clear structure for the programs
+3.  OOP helps to keep the C++ code DRY "Don't Repeat Yourself", and makes the code easier to maintain, modify and debug
+4.  OOP makes it possible to create full reusable applications with less code and shorter development time
+
+Tip: The "Don't Repeat Yourself" (DRY) principle is about reducing the repetition of code. You should extract out the codes that are common for the application, and place them at a single place and reuse them instead of repeating it.
+
+## Setup
+
+Lets Create a Demo Database called **'uba_test'** and a table **'students'**
+Run the SQL Cammands below
+
+// Createa a Database
+
+```sql
+CREATE DATABASE `uba_test`;
+```
+
+// Create students table
+
+```sql
+CREATE TABLE `students` (
+  `id` int(11) NOT NULL  AUTO_INCREMENT PRIMARY KEY,
+  `full_name` varchar(50) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `added_on` datetime DEFAULT current_timestamp()
+);
+```
+
+// Insert some data
+
+```SQL
+INSERT INTO `students` (`full_name`, `email`) VALUES
+('Wong Lee', 'wonglee@gmail.com'),
+('test ', 'test@gmail.com'),
+('John Doe', 'johndoe@gmail.com');
+
+```
+
+## Approach
+
+With our new concepts of OOP, our file structure will now differ from the procedural approach.
+Separating our logic from our code into controller methods and reusing Database Class when needed. Normally each controller class contain application logic and mapped to a **Model** class that connect to the database.
+
+We shall use just a Controller class for Logic and Database interactions for demonstration.
+
+## File Structure
+
+![File structure](./screenshots/15.0.PNG)
+
+create a congig.php file
+
+```php
+<?php
+// Custom Variable Constants
+
+# Database Strings,
+define("DB_SERVER", "localhost");
+define("DB_USER", "root");
+define("DB_PASSWORD", "");
+define("DB_NAME", "ub_test");
+
+
+```
+
+Using this constant, in our Database Class.
+
+```php
+<?php
+namespace app\models;
+include_once __DIR__."/config.php";
+
+class Database {
+
+	// Initializing Variables
+	private String $DB_server   =  DB_SERVER;
+	private String $DB_user     =  DB_USER;
+	private String $DB_password =  DB_PASSWORD;
+	private String $DB_name     =  DB_NAME;
+
+	private $conn;
+
+	public function __construct()	{
+
+		$connection = new \mysqli(
+                  $this->DB_server,
+                  $this->DB_user,
+                  $this->DB_password,
+                  $this->DB_name);
+
+		if(!$connection) {
+			die(mysqli_connect_error()."Connection Failed");
+		}
+
+		$this->conn = $connection;
+	}
+
+	public function connect() {
+		return $this->conn;
+	}
+}
+
+
+```
+
+Now we have a Database Class and a connect method. Our **\_\_construct()** method will create a database connection on every instance. The **connect()** method return the connection store in a private $conn variable. This will be accessed in our controller class for database manipulation.
+
+PDO is mostly recommenced for large scale application. It provides a variety of methods that enhances secure connections to the Database system.
+
+We shall talk about namespace and usage later on.
+
+Let's use this Database class in our controller class:
+
+```php
+
+<?php
+namespace app\controllers;
+
+include_once __DIR__."/../models/Database.php";
+
+// using a namespace definition
+use app\models\Database;
+
+// Class Definition
+class StudentController {
+
+	// Connection Variables
+	private $conn;
+
+  // Using Database Connections
+  public function __construct()
+  {
+    $DB = new Database();
+    $this->conn = $DB->connect();
+  }
+
+  // methods to Handle logic goes here
+  public function functionName($arguments) {
+    # code --
+  }
+}
+```
+
+The **\_\_contruct()** will create a new Database instance and store inside the _private $conn_ variable
+
+Lets create a method to add a new student in the Database
+
+```php
+
+  // Add a student into Database Handler  Method
+	public function createStudent() {
+    $name = $_POST['student_name'];
+    $email = $_POST['email_address'];
+
+    # TODO: sanitize Students Data
+    # TODO: create a Student Model to manage Database
+    $students_sql = "INSERT INTO students (full_name, email)
+                      VALUES ('$name', '$email')";
+    $response = mysqli_query($this->conn, $students_sql);
+
+    return $response;
+	}
+
+```
+
+Here, To use the connection, we use the keyword **$this->** followed by the variable name **$conn**
+
+Lets create a method to get all students from the Database
+
+```php
+
+  // Get all Students
+	public function getStudents() {
+    # TODO: create a Student Model to manage Database
+    // SQL and mysqli_query,  fetch data from the Database
+    $students_sql = "SELECT * FROM students";
+    $response = mysqli_query($this->conn, $students_sql);
+
+    # Students Data: Array Object
+    $student_data = [];
+
+    if(mysqli_num_rows($response) > 0) {
+
+      while ($row = mysqli_fetch_assoc($response)) {
+        $student_data[] = $row;
+      }
+    }
+    return $student_data;
+	}
+```
+
+## Usage
+
+We have done a lot so far. Lets see how to implement this.
+
+1. Include the Controller Class into your index page
+2. Access the class object by namespace and create a new instance of the class.
+3. From the new instance, you can access handler methods based on requirements.
+
+![Accessing a method from the controller class](./screenshots/OOP/OOP-04.PNG)
+![Accessing a method from the controller class](./screenshots/OOP/OOP-05.PNG)
